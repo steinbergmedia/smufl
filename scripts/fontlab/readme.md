@@ -51,3 +51,10 @@ You should also run the **annotate_glyphs_with_smufl_names.py** script if you ha
 You do not need to take any specific action to ensure that the glyph bounding boxes are exported correctly: these can be determined automatically.
 
 However, you should manually add the appropriate anchors to individual glyphs, as described in the **Notes for implementers** section of the SMuFL specification. Refer to **Anchors layer** in **Chapter 6: The Glyph Window** in the FontLab Studio 5 documentation for detailed instructions.
+
+### make_text_font.py
+From a given font intended for use in scoring applications, creates a font intended for use in text-based applications.
+
+It does this by saving a copy of the open font file, adjusting the various names (to add **Text** to the end), then makes adjustments to the font metrics, glyph scaling, and glyph registration as required to handle the differences in guidelines between fonts intended for scoring and text-based applications.
+
+The script also creates ligatures for ranges of characters that are intended to be combined with the control characters in the **Combining staff positions** range, and will create a suitable **liga** OpenType feature table (or append entries to the existing one, if present).
