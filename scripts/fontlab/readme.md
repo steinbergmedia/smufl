@@ -42,7 +42,7 @@ Annotates glyphs with code points matching those defined in the SMuFL specificat
 If you already have a SMuFL-compliant font and wish to export the JSON metadata, run this script first to ensure that all of the glyphs in the font have the correct canonical name. The script that exports the font metadata will use the string stored in each glyph's Note field as the primary key for each glyph's metadata in the **glyphsWithAnchors** and **glyphBBoxes** structures.
 
 ### generate_font_metadata.py
-Exports a JSON file containing the **fontName**, **fontVersion**, **engravingDefaults**, **glyphBBoxes**, and **glyphsWithAnchors** metadata.
+Exports a JSON file containing the **fontName**, **fontVersion**, **engravingDefaults**, **glyphBBoxes**, **glyphsWithAnchors**, and **optionalGlyphs** metadata.
 
 Before running this script, you should check the values in the `font_metadata` block near the top of the script to ensure the values for the **engravingDefaults** structure are as desired for your specific font. (The default values are taken from those used for Bravura.)
 
@@ -51,6 +51,8 @@ You should also run the **annotate_glyphs_with_smufl_names.py** script if you ha
 You do not need to take any specific action to ensure that the glyph bounding boxes are exported correctly: these can be determined automatically.
 
 However, you should manually add the appropriate anchors to individual glyphs, as described in the **Notes for implementers** section of the SMuFL specification. Refer to **Anchors layer** in **Chapter 6: The Glyph Window** in the FontLab Studio 5 documentation for detailed instructions.
+
+You should also use **Add Note...** (found in the contextual menu for each glyph) to add a note to each glyph in the optional range (U+F400–U+FFFF) containing the glyph name. The **optionalGlyphs** structure is only populated with glyphs that have names specified in their notes.
 
 ### make_text_font.py
 From a given font intended for use in scoring applications, creates a font intended for use in text-based applications.
