@@ -58,7 +58,8 @@ font_metadata = {
         "tupletBracketThickness": 0.16
     },
     "glyphsWithAnchors": {},
-    "glyphBBoxes": {} }
+    "glyphBBoxes": {},
+    "optionalGlyphs": {}}
 
 
 metadata_filename = os.path.join(OUTPUT_DIR, "%s_metadata_%s.json" % ( fl.font.font_name,
@@ -68,6 +69,9 @@ print "Writing metadata to: %s" % metadata_filename
 
 def to_cartesian(val):
     return float(val)/250
+    
+def format_codepoint(val):
+    return hex(val).upper()[2:]
 
 glyphs_with_anchors = {}
 for g in fl.font.glyphs:
@@ -95,6 +99,10 @@ for g in fl.font.glyphs:
         for anchor in g.anchors:
             font_metadata['glyphsWithAnchors'][g.note][anchor.name] = \
                 [to_cartesian(anchor.x), to_cartesian(anchor.y)]
+
+    if int(g.unicode) >= 0xF400:
+        font_metadata["optionalGlyphs"][g.note] = {'classes': []}
+        font_metadata["optionalGlyphs"][g.note]['codepoint'] = "U+%s" % format_codepoint(g.unicode)
 
 with open(metadata_filename, 'w') as outfile:
     json.dump(font_metadata, outfile, indent=True, sort_keys=True)
