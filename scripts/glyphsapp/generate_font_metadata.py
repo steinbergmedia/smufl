@@ -89,14 +89,8 @@ for g in currentFont.glyphs:
         font_metadata['glyphsWithAnchors'][glyph_name] = {}
 
         for anchor in layer.anchors:
-
-            if anchor.name.startswith('cutOut'):
-                font_metadata['glyphsWithAnchors'][glyph_name][anchor.name] = \
-                    [to_cartesian(anchor.position.x - layer.bounds.origin.x),
-                     to_cartesian(anchor.position.y - layer.bounds.origin.y)]
-            else:
-                font_metadata['glyphsWithAnchors'][glyph_name][anchor.name] = \
-                    [to_cartesian(anchor.position.x), to_cartesian(anchor.position.y)]
+            font_metadata['glyphsWithAnchors'][glyph_name][anchor.name] = \
+                [to_cartesian(anchor.position.x), to_cartesian(anchor.position.y)]
         
 with open(metadata_filename, 'w') as outfile:
     json.dump(font_metadata, outfile, indent=True, sort_keys=True)
